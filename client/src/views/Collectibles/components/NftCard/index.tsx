@@ -12,7 +12,7 @@ import {
   Text,
   CardFooter,
   useModal,
-} from '@pancakeswap/uikit'
+} from 'hydroprojectuikit'
 import { useProfile } from 'state/profile/hooks'
 import { useTranslation } from 'contexts/Localization'
 import { Nft } from 'config/constants/nfts/types'
