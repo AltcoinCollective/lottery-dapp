@@ -22,6 +22,7 @@ const getInitialState = ({
   amount: number
   userCurrentTickets: LotteryTicket[]
 }): TicketsState => {
+  console.log('generate ticket',amount, userCurrentTickets)
   const randomTickets = generateTicketNumbers(amount, userCurrentTickets)
   const randomTicketsAsStringArray = randomTickets.map((ticket) => parseRetrievedNumber(ticket.toString()).split(''))
   const tickets = Array.from({ length: amount }, (_, i) => i + 1).map((index) => ({

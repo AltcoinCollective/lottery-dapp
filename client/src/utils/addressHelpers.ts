@@ -14,6 +14,7 @@ export const getMulticallAddress = () => {
   return getAddress(addresses.multiCall)
 }
 export const getLotteryV2Address = () => {
+  
   return getAddress(addresses.lotteryV2)
 }
 export const getPancakeProfileAddress = () => {

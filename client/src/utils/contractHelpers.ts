@@ -39,7 +39,8 @@ import cakeAbi from 'config/abi/cake.json'
 import ifoV1Abi from 'config/abi/ifoV1.json'
 import ifoV2Abi from 'config/abi/ifoV2.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
-import lotteryV2Abi from 'config/abi/lotteryV2.json'
+import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
+import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
 import masterChef from 'config/abi/masterchef.json'
 import sousChef from 'config/abi/sousChef.json'
 import sousChefV2 from 'config/abi/sousChefV2.json'
@@ -105,7 +106,10 @@ export const getBunnySpecialContract = (signer?: ethers.Signer | ethers.provider
   return getContract(bunnySpecialAbi, getBunnySpecialAddress(), signer)
 }
 export const getLotteryV2Contract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(lotteryV2Abi, getLotteryV2Address(), signer)
+  const abi = HlotteryV2Abi.abi
+   console.log('Hydro Abi',  HlotteryV2Abi.abi)
+   console.log('Cake Lottery',  lotteryV2Abi)
+  return getContract(abi, getLotteryV2Address(), signer)
 }
 export const getMasterchefContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(masterChef, getMasterChefAddress(), signer)

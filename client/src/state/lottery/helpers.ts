@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { LotteryStatus, LotteryTicket } from 'config/constants/types'
-import lotteryV2Abi from 'config/abi/lotteryV2.json'
+import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
+import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
 import { getLotteryV2Address } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
 import { LotteryRound, LotteryRoundUserTickets, LotteryResponse } from 'state/types'
@@ -91,7 +92,7 @@ export const fetchMultipleLotteries = async (lotteryIds: string[]): Promise<Lott
     params: [id],
   }))
   try {
-    const multicallRes = await multicallv2(lotteryV2Abi, calls, { requireSuccess: false })
+    const multicallRes = await multicallv2(HlotteryV2Abi.abi, calls, { requireSuccess: false })
     const processedResponses = multicallRes.map((res, index) =>
       processViewLotterySuccessResponse(res[0], lotteryIds[index]),
     )
