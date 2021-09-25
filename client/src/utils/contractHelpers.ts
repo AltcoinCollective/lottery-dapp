@@ -39,8 +39,8 @@ import cakeAbi from 'config/abi/cake.json'
 import ifoV1Abi from 'config/abi/ifoV1.json'
 import ifoV2Abi from 'config/abi/ifoV2.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
-// import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
-import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
+import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
+// import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
 import masterChef from 'config/abi/masterchef.json'
 import sousChef from 'config/abi/sousChef.json'
 import sousChefV2 from 'config/abi/sousChefV2.json'
@@ -59,7 +59,7 @@ import farmAuctionAbi from 'config/abi/farmAuction.json'
 import { ChainLinkOracleContract, FarmAuctionContract, PancakeProfileContract, PredictionsContract } from './types'
 
 
-const lotteryV2Abi = HlotteryV2Abi.abi
+// const lotteryV2Abi = HlotteryV2Abi.abi
 const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
   const signerOrProvider = signer ?? simpleRpcProvider
   return new ethers.Contract(address, abi, signerOrProvider)

@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { LotteryStatus, LotteryTicket, LotteryTicketClaimData } from 'config/constants/types'
 import { LotteryUserGraphEntity, LotteryRoundGraphEntity } from 'state/types'
-import { multicallv2 } from 'utils/multicall'
+// import { multicallv2 } from 'utils/multicall'
 // import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
 import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
 import { NUM_ROUNDS_TO_CHECK_FOR_REWARDS } from 'config/constants/lottery'
@@ -35,11 +35,14 @@ const fetchCakeRewardsForTickets = async (
   })
 
   try {
-    const cakeRewards = await multicallv2(lotteryV2Abi, calls)
+  //  const cakeRewards = await multicallv2(lotteryV2Abi, calls)
 
-    const cakeTotal = cakeRewards.reduce((accum: BigNumber, cakeReward: ethers.BigNumber[]) => {
-      return accum.plus(new BigNumber(cakeReward[0].toString()))
-    }, BIG_ZERO)
+  //  const cakeTotal = cakeRewards.reduce((accum: BigNumber, cakeReward: ethers.BigNumber[]) => {
+  //    return accum.plus(new BigNumber(cakeReward[0].toString()))
+  //  }, BIG_ZERO)
+
+  const cakeRewards = new BigNumber(0)
+  const cakeTotal = new BigNumber(0)
 
     const ticketsWithUnclaimedRewards = winningTickets.map((winningTicket, index) => {
       return { ...winningTicket, cakeReward: cakeRewards[index] }

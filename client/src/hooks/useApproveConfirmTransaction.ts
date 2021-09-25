@@ -35,31 +35,37 @@ const reducer = (state: State, actions: Action): State => {
         approvalState: 'success',
       }
     case 'approve_sending':
+      console.log('i need - approve sending', state)
       return {
         ...state,
         approvalState: 'loading',
       }
     case 'approve_receipt':
+      console.log('i need - approve receipt', state)
       return {
         ...state,
         approvalState: 'success',
       }
     case 'approve_error':
+      console.log('i need - approve error', state)
       return {
         ...state,
         approvalState: 'fail',
       }
     case 'confirm_sending':
+      console.log('i need - approval', state)
       return {
         ...state,
         confirmState: 'loading',
       }
     case 'confirm_receipt':
+      console.log('i need - confirm receipt', state)
       return {
         ...state,
         confirmState: 'success',
       }
     case 'confirm_error':
+      console.log('i need - confirm error', state)
       return {
         ...state,
         confirmState: 'fail',
@@ -96,7 +102,6 @@ const useApproveConfirmTransaction = ({
   const { toastError } = useToast()
 
   // Check if approval is necessary, re-check if account changes
-  console.log('inside approve', account, handlePreApprove.current)
   useEffect(() => {
     if (account && handlePreApprove.current) {
       handlePreApprove.current().then((result) => {
@@ -114,7 +119,7 @@ const useApproveConfirmTransaction = ({
     isConfirming: state.confirmState === 'loading',
     isConfirmed: state.confirmState === 'success',
     handleApprove: async () => {
-      console.log('handle approve>>>>>>>',)
+      console.log('handle approve')
       try {
         const tx = await onApprove()
         dispatch({ type: 'approve_sending' })
@@ -130,6 +135,7 @@ const useApproveConfirmTransaction = ({
      }
     },
     handleConfirm: async () => {
+      console.log('confirm sending>>>>>')
       dispatch({ type: 'confirm_sending' })
       try {
         const tx = await onConfirm()

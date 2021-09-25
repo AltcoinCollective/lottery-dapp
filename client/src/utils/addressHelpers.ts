@@ -4,14 +4,6 @@ import { Address } from 'config/constants/types'
 
 export const getAddress = (address: Address): string => {
   const chainId = process.env.REACT_APP_CHAIN_ID
-  if(address[97] ==='0x8F3273Fb89B075b1645095ABaC6ed17B2d4Bc576'){
-    console.log('multicall', address[chainId])
-  }
-  if(address[97] ==='0x1dEf72266e09e9EB7d7b49048DA55B58Aded4E40'){
-    console.log('lottery', address[chainId])
-  }
-  // console.log('get address', address[chainId])
-  // console.log('chain id',  chainId, process.env)
   return address[chainId] ? address[chainId] : address[ChainId.MAINNET]
 }
 

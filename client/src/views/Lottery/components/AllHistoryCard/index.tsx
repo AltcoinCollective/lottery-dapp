@@ -57,11 +57,11 @@ const AllHistoryCard = () => {
     setSelectedLotteryNodeData(null)
 
     const fetchLotteryData = async () => {
-      console.log('selected round', selectedRoundId)
+  
       const lotteryData = await fetchLottery(selectedRoundId)
-      console.log('lottery data', lotteryData)
+
       const processedLotteryData = processLotteryResponse(lotteryData)
-      console.log(processedLotteryData, 'proceeded data')
+
       setSelectedLotteryNodeData(processedLotteryData)
     }
 

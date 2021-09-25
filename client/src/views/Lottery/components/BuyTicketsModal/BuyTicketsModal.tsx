@@ -239,26 +239,29 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     userCurrentTickets,
   )
 
-  console.log('lottry address',  cakeContract)
-  const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
+  const { isApproving, isApproved,isConfirming, isConfirmed, handleApprove, handleConfirm } =
     useApproveConfirmTransaction({
+      onApprove: () => {
+        return callWithGasPrice(cakeContract, 'approve', [lotteryContract.address, ethers.constants.MaxUint256])
+      },
+      onConfirm: () => {
+        const ticketsForPurchase = getTicketsForPurchase()
+        return callWithGasPrice(lotteryContract, 'buyTickets', [currentLotteryId, ticketsForPurchase])
+      },
       onRequiresApproval: async () => {
-            console.log('in requireed', cakeContract)
         try {
           const response = await cakeContract.allowance(account, lotteryContract.address)
-          console.log('response block', response)
           const currentAllowance = ethersToBigNumber(response)
-          console.log('current allowance', currentAllowance)
-          console.log('current allowance status', currentAllowance.gt(0))
+          console.log('approve flow', [lotteryContract.address, ethers.constants.MaxUint256])
           return currentAllowance.gt(0)
         } catch (error) {
-          console.log('error block', error)
           return false
         }
       },
-      onApprove: () => {
-        console.log('aprove funct')
-        return callWithGasPrice(cakeContract, 'approve', [lotteryContract.address, ethers.constants.MaxUint256])
+      onSuccess: async ({ receipt }) => {
+        onDismiss()
+        dispatch(fetchUserTicketsAndLotteries({ account, currentLotteryId }))
+        toastSuccess(t('Lottery tickets purchased!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
       },
       onApproveSuccess: async ({ receipt }) => {
         toastSuccess(
@@ -266,16 +269,10 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
           <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
         )
       },
-      onConfirm: () => {
-        const ticketsForPurchase = getTicketsForPurchase()
-        return callWithGasPrice(lotteryContract, 'buyTickets', [currentLotteryId, ticketsForPurchase])
-      },
-      onSuccess: async ({ receipt }) => {
-        onDismiss()
-        dispatch(fetchUserTicketsAndLotteries({ account, currentLotteryId }))
-        toastSuccess(t('Lottery tickets purchased!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-      },
+
     })
+
+    console.log('approval status >>',isApproving, isApproved,isConfirming, isConfirmed, handleApprove,  'last char', handleConfirm)
 
   const getErrorMessage = () => {
     if (userNotEnoughCake) return t('Insufficient Hydro Token balance')
