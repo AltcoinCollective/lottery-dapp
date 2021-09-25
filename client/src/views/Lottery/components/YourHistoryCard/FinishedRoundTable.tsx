@@ -48,6 +48,7 @@ const FinishedRoundTable: React.FC<FinishedRoundTableProps> = ({
         <Box width="20px" />
       </Grid>
       <Flex px="24px" pb="24px" flexDirection="column" overflowY="scroll" height="240px">
+        {console.log('userr lotery',userLotteryData)}
         {userLotteryData &&
           sortedByRoundId.map((finishedRound) => (
             <FinishedRoundRow

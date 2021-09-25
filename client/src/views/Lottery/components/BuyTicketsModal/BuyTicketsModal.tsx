@@ -71,7 +71,6 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     },
   } = useLottery()
   const { callWithGasPrice } = useCallWithGasPrice()
- // console.log('gas price >> ', callWithGasPrice())
   const [ticketsToBuy, setTicketsToBuy] = useState('')
   const [discountValue, setDiscountValue] = useState('')
   const [totalCost, setTotalCost] = useState('')
@@ -88,7 +87,9 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
   const stringifiedUserCake = userCake.toJSON()
   const memoisedUserCake = useMemo(() => new BigNumber(stringifiedUserCake), [stringifiedUserCake])
 
+ 
   const cakePriceBusd = usePriceCakeBusd()
+
   const dispatch = useAppDispatch()
   const hasFetchedBalance = fetchStatus === FetchStatus.SUCCESS
   const userCakeDisplayBalance = getFullDisplayBalance(userCake, 18, 3)
@@ -144,7 +145,6 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     (inputNumber: BigNumber) => {
       const limitedNumberTickets = limitNumberByMaxTicketsPerBuy(inputNumber)
       const cakeCostAfterDiscount = getTicketCostAfterDiscount(limitedNumberTickets)
-
       if (cakeCostAfterDiscount.gt(userCake)) {
         setUserNotEnoughCake(true)
       } else if (limitedNumberTickets.eq(maxNumberTicketsPerBuyOrClaim)) {
@@ -195,6 +195,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     getTicketCostAfterDiscount,
     getMaxTicketBuyWithDiscount,
     hasFetchedBalance,
+    userNotEnoughCake
   ])
 
   useEffect(() => {
@@ -252,7 +253,6 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
         try {
           const response = await cakeContract.allowance(account, lotteryContract.address)
           const currentAllowance = ethersToBigNumber(response)
-          console.log('approve flow', [lotteryContract.address, ethers.constants.MaxUint256])
           return currentAllowance.gt(0)
         } catch (error) {
           return false
@@ -271,8 +271,6 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
       },
 
     })
-
-    console.log('approval status >>',isApproving, isApproved,isConfirming, isConfirmed, handleApprove,  'last char', handleConfirm)
 
   const getErrorMessage = () => {
     if (userNotEnoughCake) return t('Insufficient Hydro Token balance')
@@ -420,7 +418,6 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
 
         {account ? (
           <>
-          {console.log('is approving', isApproving, isApproved)}
             <ApproveConfirmButtons
               isApproveDisabled={isApproved}
               isApproving={isApproving}
