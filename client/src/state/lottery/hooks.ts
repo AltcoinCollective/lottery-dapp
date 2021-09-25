@@ -1,12 +1,49 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState, useCallback } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import useRefresh from 'hooks/useRefresh'
+import {ethers} from 'ethers'
 import { State } from '../types'
 import { fetchCurrentLotteryId, fetchCurrentLottery, fetchUserTicketsAndLotteries, fetchPublicLotteries } from '.'
 import { useProcessLotteryResponse } from './helpers'
+
+
+
+// custom hooks
+export const useCustomLotteryInfo  = (contractABI, contractAddress )=>{
+  const url = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+  const [data, setData] = useState({currentLotteryId:null, maxNumberTicketsPerBuyOrClaim :null})
+
+const memoizedFunc = useCallback(()=>{
+  const getData = async ()=>{
+    const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+    try {
+        const contract = new ethers.Contract(contractAddress,contractABI, customHttpProvider);
+        const currentLotteryId = await contract.currentLotteryId()
+        const maxNumberTicketsPerBuyOrClaim = await contract.maxNumberTicketsPerBuyOrClaim()
+        setData({currentLotteryId, maxNumberTicketsPerBuyOrClaim })
+
+        return {currentLotteryId, maxNumberTicketsPerBuyOrClaim };
+
+
+    } catch (err) {
+     return  console.log("Error: ", err)
+    }   
+
+}
+  getData()
+}, [contractABI, contractAddress])
+  useEffect(()=>{
+    memoizedFunc() 
+  },[memoizedFunc])
+  return data
+}
+
+
+
+
 
 // Lottery
 export const useGetCurrentLotteryId = () => {

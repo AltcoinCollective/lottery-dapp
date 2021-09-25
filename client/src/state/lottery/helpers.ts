@@ -1,15 +1,17 @@
 import BigNumber from 'bignumber.js'
-import { ethers } from 'ethers'
 import { LotteryStatus, LotteryTicket } from 'config/constants/types'
-import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
-import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
+import {abi as lotteryV2Abi} from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
 import { getLotteryV2Address } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
 import { LotteryRound, LotteryRoundUserTickets, LotteryResponse } from 'state/types'
+
 import { getLotteryV2Contract } from 'utils/contractHelpers'
 import { useMemo } from 'react'
 import { ethersToSerializedBigNumber } from 'utils/bigNumber'
 import { NUM_ROUNDS_TO_FETCH_FROM_NODES } from 'config/constants/lottery'
+import { lotterInfo, lotterInfoMaxBuy } from './utils'
+
+
 
 const lotteryContract = getLotteryV2Contract()
 
@@ -18,20 +20,24 @@ const processViewLotterySuccessResponse = (response, lotteryId: string): Lottery
     status,
     startTime,
     endTime,
-    priceTicketInCake,
+    priceTicketInhydro,
     discountDivisor,
     treasuryFee,
     firstTicketId,
     lastTicketId,
-    amountCollectedInCake,
+    amountCollectedInhydro,
     finalNumber,
-    cakePerBracket,
+    hydroPerBracket,
     countWinnersPerBracket,
     rewardsBreakdown,
   } = response
 
+
+
   const statusKey = Object.keys(LotteryStatus)[status]
-  const serializedCakePerBracket = cakePerBracket.map((cakeInBracket) => ethersToSerializedBigNumber(cakeInBracket))
+  
+  const serializedCakePerBracket = hydroPerBracket.map((cakeInBracket) => ethersToSerializedBigNumber(cakeInBracket))
+
   const serializedCountWinnersPerBracket = countWinnersPerBracket.map((winnersInBracket) =>
     ethersToSerializedBigNumber(winnersInBracket),
   )
@@ -43,12 +49,12 @@ const processViewLotterySuccessResponse = (response, lotteryId: string): Lottery
     status: LotteryStatus[statusKey],
     startTime: startTime?.toString(),
     endTime: endTime?.toString(),
-    priceTicketInCake: ethersToSerializedBigNumber(priceTicketInCake),
+    priceTicketInCake: ethersToSerializedBigNumber(priceTicketInhydro),
     discountDivisor: discountDivisor?.toString(),
     treasuryFee: treasuryFee?.toString(),
     firstTicketId: firstTicketId?.toString(),
     lastTicketId: lastTicketId?.toString(),
-    amountCollectedInCake: ethersToSerializedBigNumber(amountCollectedInCake),
+    amountCollectedInCake: ethersToSerializedBigNumber(amountCollectedInhydro),
     finalNumber,
     cakePerBracket: serializedCakePerBracket,
     countWinnersPerBracket: serializedCountWinnersPerBracket,
@@ -92,7 +98,7 @@ export const fetchMultipleLotteries = async (lotteryIds: string[]): Promise<Lott
     params: [id],
   }))
   try {
-    const multicallRes = await multicallv2(HlotteryV2Abi.abi, calls, { requireSuccess: false })
+    const multicallRes = await multicallv2(lotteryV2Abi, calls, { requireSuccess: false })
     const processedResponses = multicallRes.map((res, index) =>
       processViewLotterySuccessResponse(res[0], lotteryIds[index]),
     )
@@ -103,17 +109,13 @@ export const fetchMultipleLotteries = async (lotteryIds: string[]): Promise<Lott
   }
 }
 
-export const fetchCurrentLotteryIdAndMaxBuy = async () => {
-  try {
-    const calls = ['currentLotteryId', 'maxNumberTicketsPerBuyOrClaim'].map((method) => ({
-      address: getLotteryV2Address(),
-      name: method,
-    }))
-    const [[currentLotteryId], [maxNumberTicketsPerBuyOrClaim]] = (await multicallv2(
-      lotteryV2Abi,
-      calls,
-    )) as ethers.BigNumber[][]
 
+export const fetchCurrentLotteryIdAndMaxBuy = async () => {
+
+  try {
+    
+    const currentLotteryId  =await lotterInfo(lotteryV2Abi, getLotteryV2Address())
+    const maxNumberTicketsPerBuyOrClaim =await lotterInfoMaxBuy(lotteryV2Abi, getLotteryV2Address())
     return {
       currentLotteryId: currentLotteryId ? currentLotteryId.toString() : null,
       maxNumberTicketsPerBuyOrClaim: maxNumberTicketsPerBuyOrClaim ? maxNumberTicketsPerBuyOrClaim.toString() : null,

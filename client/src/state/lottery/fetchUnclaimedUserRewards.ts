@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import { LotteryStatus, LotteryTicket, LotteryTicketClaimData } from 'config/constants/types'
 import { LotteryUserGraphEntity, LotteryRoundGraphEntity } from 'state/types'
 import { multicallv2 } from 'utils/multicall'
-import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
+// import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
 import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
 import { NUM_ROUNDS_TO_CHECK_FOR_REWARDS } from 'config/constants/lottery'
 import { getLotteryV2Address } from 'utils/addressHelpers'
@@ -17,7 +17,10 @@ interface RoundDataAndUserTickets {
   finalNumber: string
 }
 
+const lotteryV2Abi  = HlotteryV2Abi.abi
+
 const lotteryAddress = getLotteryV2Address()
+
 
 const fetchCakeRewardsForTickets = async (
   winningTickets: LotteryTicket[],
@@ -32,7 +35,7 @@ const fetchCakeRewardsForTickets = async (
   })
 
   try {
-    const cakeRewards = await multicallv2(HlotteryV2Abi.abi, calls)
+    const cakeRewards = await multicallv2(lotteryV2Abi, calls)
 
     const cakeTotal = cakeRewards.reduce((accum: BigNumber, cakeReward: ethers.BigNumber[]) => {
       return accum.plus(new BigNumber(cakeReward[0].toString()))

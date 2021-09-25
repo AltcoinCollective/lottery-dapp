@@ -52,8 +52,12 @@ export const NEVER_RELOAD: ListenerOptions = {
 function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): CallResult[] {
   const { chainId } = useActiveWeb3React()
   const callResults = useSelector<AppState, AppState['multicall']['callResults']>(
-    (state) => state.multicall.callResults,
+    (state) => {
+       console.log('state>>>>', state)
+      return state.multicall.callResults
+    },
   )
+  console.log('call resultssss', callResults)
   const dispatch = useDispatch<AppDispatch>()
 
   const serializedCallKeys: string = useMemo(
@@ -73,22 +77,23 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
     if (!chainId || callKeys.length === 0) return undefined
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const calls = callKeys.map((key) => parseCallKey(key))
-    dispatch(
-      addMulticallListeners({
-        chainId,
-        calls,
-        options,
-      }),
-    )
+    console.log(calls, 'calls>>>>>>>>')
+    // dispatch(
+    //   addMulticallListeners({
+    //     chainId,
+    //     calls,
+    //     options,
+    //   }),
+   // )
 
     return () => {
-      dispatch(
-        removeMulticallListeners({
-          chainId,
-          calls,
-          options,
-        }),
-      )
+      // dispatch(
+      //   removeMulticallListeners({
+      //     chainId,
+      //     calls,
+      //     options,
+      //   }),
+      // )
     }
   }, [chainId, dispatch, options, serializedCallKeys])
 

@@ -36,10 +36,12 @@ export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol)
         setRequestedApproval(false)
       } else {
         // user rejected tx or didn't go thru
+        console.log('user approve one')
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
         setRequestedApproval(false)
       }
     } catch (e) {
+      console.log('user approve two')
       console.error(e)
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
     }
@@ -82,6 +84,7 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
       setLastUpdated()
       setRequestedApproval(false)
     } else {
+      console.log('user approve three')
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
       setRequestedApproval(false)
     }

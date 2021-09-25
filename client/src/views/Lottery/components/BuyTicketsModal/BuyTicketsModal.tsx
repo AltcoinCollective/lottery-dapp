@@ -71,6 +71,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     },
   } = useLottery()
   const { callWithGasPrice } = useCallWithGasPrice()
+ // console.log('gas price >> ', callWithGasPrice())
   const [ticketsToBuy, setTicketsToBuy] = useState('')
   const [discountValue, setDiscountValue] = useState('')
   const [totalCost, setTotalCost] = useState('')
@@ -238,18 +239,25 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     userCurrentTickets,
   )
 
+  console.log('lottry address',  cakeContract)
   const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
     useApproveConfirmTransaction({
       onRequiresApproval: async () => {
+            console.log('in requireed', cakeContract)
         try {
           const response = await cakeContract.allowance(account, lotteryContract.address)
+          console.log('response block', response)
           const currentAllowance = ethersToBigNumber(response)
+          console.log('current allowance', currentAllowance)
+          console.log('current allowance status', currentAllowance.gt(0))
           return currentAllowance.gt(0)
         } catch (error) {
+          console.log('error block', error)
           return false
         }
       },
       onApprove: () => {
+        console.log('aprove funct')
         return callWithGasPrice(cakeContract, 'approve', [lotteryContract.address, ethers.constants.MaxUint256])
       },
       onApproveSuccess: async ({ receipt }) => {
@@ -415,6 +423,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
 
         {account ? (
           <>
+          {console.log('is approving', isApproving, isApproved)}
             <ApproveConfirmButtons
               isApproveDisabled={isApproved}
               isApproving={isApproving}

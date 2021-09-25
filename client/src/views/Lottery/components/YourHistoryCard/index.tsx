@@ -64,6 +64,7 @@ const YourHistoryCard: React.FC<YourHistoryCardProps> = ({ handleShowMoreClick, 
   const handleHistoryRowClick = async (lotteryId: string) => {
     setShouldShowRoundDetail(true)
     setSelectedLotteryId(lotteryId)
+    console.log(lotteryId, 'lottery data')
     const lotteryData = await fetchLottery(lotteryId)
     const processedLotteryData = processLotteryResponse(lotteryData)
     setSelectedLotteryNodeData(processedLotteryData)

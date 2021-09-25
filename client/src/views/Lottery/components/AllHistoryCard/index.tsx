@@ -33,6 +33,8 @@ const AllHistoryCard = () => {
     lotteriesData,
     currentRound: { status, isLoading },
   } = useLottery()
+
+  console.log (currentLotteryId, 'from hook lotert')
   const [latestRoundId, setLatestRoundId] = useState(null)
   const [selectedRoundId, setSelectedRoundId] = useState('')
   const [selectedLotteryNodeData, setSelectedLotteryNodeData] = useState(null)
@@ -41,6 +43,7 @@ const AllHistoryCard = () => {
   const numRoundsFetched = lotteriesData?.length
 
   useEffect(() => {
+    console.log(currentLotteryId, 'current')
     if (currentLotteryId) {
       const currentLotteryIdAsInt = currentLotteryId ? parseInt(currentLotteryId) : null
       const mostRecentFinishedRoundId =
@@ -54,8 +57,11 @@ const AllHistoryCard = () => {
     setSelectedLotteryNodeData(null)
 
     const fetchLotteryData = async () => {
+      console.log('selected round', selectedRoundId)
       const lotteryData = await fetchLottery(selectedRoundId)
+      console.log('lottery data', lotteryData)
       const processedLotteryData = processLotteryResponse(lotteryData)
+      console.log(processedLotteryData, 'proceeded data')
       setSelectedLotteryNodeData(processedLotteryData)
     }
 

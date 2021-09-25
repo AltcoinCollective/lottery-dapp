@@ -29,6 +29,7 @@ const initialState: State = {
 const reducer = (state: State, actions: Action): State => {
   switch (actions.type) {
     case 'requires_approval':
+      console.log('i need approval', state)
       return {
         ...state,
         approvalState: 'success',
@@ -95,9 +96,11 @@ const useApproveConfirmTransaction = ({
   const { toastError } = useToast()
 
   // Check if approval is necessary, re-check if account changes
+  console.log('inside approve', account, handlePreApprove.current)
   useEffect(() => {
     if (account && handlePreApprove.current) {
       handlePreApprove.current().then((result) => {
+        console.log('resultttt', result)
         if (result) {
           dispatch({ type: 'requires_approval' })
         }
@@ -111,6 +114,7 @@ const useApproveConfirmTransaction = ({
     isConfirming: state.confirmState === 'loading',
     isConfirmed: state.confirmState === 'success',
     handleApprove: async () => {
+      console.log('handle approve>>>>>>>',)
       try {
         const tx = await onApprove()
         dispatch({ type: 'approve_sending' })
@@ -120,9 +124,10 @@ const useApproveConfirmTransaction = ({
           onApproveSuccess({ state, receipt })
         }
       } catch (error) {
+        console.log('error block', error)
         dispatch({ type: 'approve_error' })
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
-      }
+     }
     },
     handleConfirm: async () => {
       dispatch({ type: 'confirm_sending' })
@@ -134,6 +139,7 @@ const useApproveConfirmTransaction = ({
           onSuccess({ state, receipt })
         }
       } catch (error) {
+        console.log('handle confirm error', error)
         dispatch({ type: 'confirm_error' })
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
       }

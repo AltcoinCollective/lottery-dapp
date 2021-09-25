@@ -39,7 +39,7 @@ import cakeAbi from 'config/abi/cake.json'
 import ifoV1Abi from 'config/abi/ifoV1.json'
 import ifoV2Abi from 'config/abi/ifoV2.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
-import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
+// import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
 import HlotteryV2Abi from 'hydroConfig/contracts/HydroLottery.sol/HydroSwapLottery.json'
 import masterChef from 'config/abi/masterchef.json'
 import sousChef from 'config/abi/sousChef.json'
@@ -58,6 +58,8 @@ import bunnySpecialLotteryAbi from 'config/abi/bunnySpecialLottery.json'
 import farmAuctionAbi from 'config/abi/farmAuction.json'
 import { ChainLinkOracleContract, FarmAuctionContract, PancakeProfileContract, PredictionsContract } from './types'
 
+
+const lotteryV2Abi = HlotteryV2Abi.abi
 const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
   const signerOrProvider = signer ?? simpleRpcProvider
   return new ethers.Contract(address, abi, signerOrProvider)
@@ -91,6 +93,8 @@ export const getPointCenterIfoContract = (signer?: ethers.Signer | ethers.provid
   return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer)
 }
 export const getCakeContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  
+  console.log('cake address >>>', tokens.cake.address, getContract(cakeAbi, tokens.cake.address, signer) )
   return getContract(cakeAbi, tokens.cake.address, signer)
 }
 export const getProfileContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
@@ -106,10 +110,7 @@ export const getBunnySpecialContract = (signer?: ethers.Signer | ethers.provider
   return getContract(bunnySpecialAbi, getBunnySpecialAddress(), signer)
 }
 export const getLotteryV2Contract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  const abi = HlotteryV2Abi.abi
-   console.log('Hydro Abi',  HlotteryV2Abi.abi)
-   console.log('Cake Lottery',  lotteryV2Abi)
-  return getContract(abi, getLotteryV2Address(), signer)
+  return getContract(lotteryV2Abi, getLotteryV2Address(), signer,)
 }
 export const getMasterchefContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(masterChef, getMasterChefAddress(), signer)
