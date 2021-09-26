@@ -65,7 +65,6 @@ export const fetchUserTicketsForMultipleRounds = async (
       userTickets: ticketsForRound,
     })
 
-    console.log('ticket for one round', i,  idsToCheck, idsToCheck.length, roundId, ticketsForRound, ticketsForMultipleRounds)
   }
   return ticketsForMultipleRounds
 }

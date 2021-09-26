@@ -176,31 +176,31 @@ const PoolAllocations = () => {
         <AllocationGrid>
           <AllocationMatch color="#FFE362" text={t('Matches first %digits%', { digits: 1 })} />
           <Text textAlign="right" bold>
-            2%
+            5%
           </Text>
           <AllocationMatch color="#85C54E" text={t('Matches first %digits%', { digits: 2 })} />
           <Text textAlign="right" bold>
-            3%
+            9%
           </Text>
           <AllocationMatch color="#028E75" text={t('Matches first %digits%', { digits: 3 })} />
           <Text textAlign="right" bold>
-            5%
+            13%
           </Text>
           <AllocationMatch color="#36E8F5" text={t('Matches first %digits%', { digits: 4 })} />
           <Text textAlign="right" bold>
-            10%
+            19%
           </Text>
           <AllocationMatch color="#A881FC" text={t('Matches first %digits%', { digits: 5 })} />
           <Text textAlign="right" bold>
-            20%
+            25%
           </Text>
           <AllocationMatch color="#D750B2" text={t('Matches all 6')} />
           <Text textAlign="right" bold>
-            40%
+            29%
           </Text>
           <AllocationMatch color="#BDC2C4" text={t('Burn Pool')} />
           <Text textAlign="right" bold>
-            20%
+            10%
           </Text>
         </AllocationGrid>
       </StepCardInner>
