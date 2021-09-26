@@ -29,43 +29,36 @@ const initialState: State = {
 const reducer = (state: State, actions: Action): State => {
   switch (actions.type) {
     case 'requires_approval':
-      console.log('i need approval', state)
       return {
         ...state,
         approvalState: 'success',
       }
     case 'approve_sending':
-      console.log('i need - approve sending', state)
       return {
         ...state,
         approvalState: 'loading',
       }
     case 'approve_receipt':
-      console.log('i need - approve receipt', state)
       return {
         ...state,
         approvalState: 'success',
       }
     case 'approve_error':
-      console.log('i need - approve error', state)
       return {
         ...state,
         approvalState: 'fail',
       }
     case 'confirm_sending':
-      console.log('i need - approval', state)
       return {
         ...state,
         confirmState: 'loading',
       }
     case 'confirm_receipt':
-      console.log('i need - confirm receipt', state)
       return {
         ...state,
         confirmState: 'success',
       }
     case 'confirm_error':
-      console.log('i need - confirm error', state)
       return {
         ...state,
         confirmState: 'fail',
@@ -105,7 +98,6 @@ const useApproveConfirmTransaction = ({
   useEffect(() => {
     if (account && handlePreApprove.current) {
       handlePreApprove.current().then((result) => {
-        console.log('resultttt', result)
         if (result) {
           dispatch({ type: 'requires_approval' })
         }
@@ -119,7 +111,7 @@ const useApproveConfirmTransaction = ({
     isConfirming: state.confirmState === 'loading',
     isConfirmed: state.confirmState === 'success',
     handleApprove: async () => {
-      console.log('handle approve')
+
       try {
         const tx = await onApprove()
         dispatch({ type: 'approve_sending' })
@@ -129,13 +121,11 @@ const useApproveConfirmTransaction = ({
           onApproveSuccess({ state, receipt })
         }
       } catch (error) {
-        console.log('error block', error)
         dispatch({ type: 'approve_error' })
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
      }
     },
     handleConfirm: async () => {
-      console.log('confirm sending>>>>>')
       dispatch({ type: 'confirm_sending' })
       try {
         const tx = await onConfirm()
@@ -145,7 +135,6 @@ const useApproveConfirmTransaction = ({
           onSuccess({ state, receipt })
         }
       } catch (error) {
-        console.log('handle confirm error', error)
         dispatch({ type: 'confirm_error' })
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
       }

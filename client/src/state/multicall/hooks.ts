@@ -7,13 +7,16 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useBlock } from 'state/block/hooks'
 import { AppDispatch, AppState } from '../index'
 import {
-  addMulticallListeners,
   Call,
-  removeMulticallListeners,
-  parseCallKey,
   toCallKey,
   ListenerOptions,
 } from './actions'
+
+// import {
+//  parseCallKey,
+//   addMulticallListeners,
+//   removeMulticallListeners,
+// } from './actions'
 
 export interface Result extends ReadonlyArray<any> {
   readonly [key: string]: any
@@ -53,11 +56,9 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
   const { chainId } = useActiveWeb3React()
   const callResults = useSelector<AppState, AppState['multicall']['callResults']>(
     (state) => {
-       console.log('state>>>>', state)
       return state.multicall.callResults
     },
   )
-  console.log('call resultssss', callResults)
   const dispatch = useDispatch<AppDispatch>()
 
   const serializedCallKeys: string = useMemo(
@@ -76,8 +77,7 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
     const callKeys: string[] = JSON.parse(serializedCallKeys)
     if (!chainId || callKeys.length === 0) return undefined
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const calls = callKeys.map((key) => parseCallKey(key))
-    console.log(calls, 'calls>>>>>>>>')
+    // const calls = callKeys.map((key) => parseCallKey(key))
     // dispatch(
     //   addMulticallListeners({
     //     chainId,

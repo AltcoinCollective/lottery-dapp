@@ -50,7 +50,6 @@ export const fetchCurrentLottery = createAsyncThunk<LotteryResponse, { currentLo
 
 export const fetchCurrentLotteryId = createAsyncThunk<PublicLotteryData>('lottery/fetchCurrentLotteryId', async () => {
   const currentIdAndMaxBuy = await fetchCurrentLotteryIdAndMaxBuy()
-  console.log('lotery id xoxo', currentIdAndMaxBuy)
   return currentIdAndMaxBuy
 })
 
@@ -114,7 +113,6 @@ export const LotterySlice = createSlice({
       state.currentRound = { ...state.currentRound, ...action.payload }
     })
     builder.addCase(fetchCurrentLotteryId.fulfilled, (state, action: PayloadAction<PublicLotteryData>) => {
-      console.log ('payload',  action.payload)
       state.currentLotteryId = action.payload.currentLotteryId
       state.maxNumberTicketsPerBuyOrClaim = action.payload.maxNumberTicketsPerBuyOrClaim
     })

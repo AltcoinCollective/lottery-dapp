@@ -69,7 +69,6 @@ export const useERC721 = (address: string) => {
 
 export const useCake = () => {
   const { library } = useActiveWeb3React()
-  console.log(getCakeContract(library.getSigner()), 'library ', [library])
   return useMemo(() => getCakeContract(library.getSigner()), [library])
 }
 

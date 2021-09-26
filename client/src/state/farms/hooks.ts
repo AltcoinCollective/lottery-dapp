@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { useWeb3React } from '@web3-react/core'
@@ -145,13 +145,13 @@ export const useLpTokenPrice = (symbol: string) => {
 // /!\ Deprecated , use the BUSD hook in /hooks
 
 export const usePriceCakeBusd = (): BigNumber => {
-  const cakeBnbFarm = useFarmFromPid(251)
+ // const cakeBnbFarm = useFarmFromPid(251)
 
-  const cakePriceBusdAsString = cakeBnbFarm.tokenPriceBusd
+  // const cakePriceBusdAsString = cakeBnbFarm.tokenPriceBusd
 
-  const cakePriceBusd = useMemo(() => {
-    return new BigNumber(cakePriceBusdAsString)
-  }, [cakePriceBusdAsString])
+  // const cakePriceBusd = useMemo(() => {
+  //   return new BigNumber(cakePriceBusdAsString)
+  // }, [cakePriceBusdAsString])
 
   return new BigNumber(0.01);
 }

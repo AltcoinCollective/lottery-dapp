@@ -29,7 +29,7 @@ const memoizedFunc = useCallback(()=>{
 
 
     } catch (err) {
-     return  console.log("Error: ", err)
+     return   err
     }   
 
 }

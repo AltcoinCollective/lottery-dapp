@@ -7,7 +7,6 @@ const lotteryContract = getLotteryV2Contract()
 
 export const processRawTicketsResponse = (ticketsResponse: UserTicketsResponse): LotteryTicket[] => {
   const [ticketIds, ticketNumbers, ticketStatuses] = ticketsResponse
-  console.log('tickeet id', ticketIds, ticketNumbers)
   if (ticketIds?.length > 0) {
     return ticketIds.map((ticketId, index) => {
       return {
@@ -27,10 +26,7 @@ export const viewUserInfoForLotteryId = async (
   perRequestLimit: number,
 ): Promise<LotteryTicket[]> => {
   try {
-    console.log('all info supplided', account, lotteryId, cursor, perRequestLimit)
-    console.log(' lottery contract  ', await lotteryContract.viewUserInfoForLotteryId('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', '1', 0, 0))
-    const data = await lotteryContract.viewUserInfoForLotteryId(account, '1', 0, 0)
-    console.log('data >>>>', data)
+    const data = await lotteryContract.viewUserInfoForLotteryId(account, lotteryId, cursor, perRequestLimit)
     return processRawTicketsResponse(data)
   } catch (error) {
     console.error('viewUserInfoForLotteryId', error)

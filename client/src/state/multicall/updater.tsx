@@ -63,10 +63,8 @@ export function activeListeningKeys(
   const listeners = allListeners[chainId]
   if (!listeners) return {}
 
-  console.log('listeners', listeners)
   
   return Object.keys(listeners).reduce<{ [callKey: string]: number }>((memo, callKey) => {
-    console.log('call key', callKey)
     const keyListeners = listeners[callKey]
 
     memo[callKey] = Object.keys(keyListeners)
@@ -101,7 +99,6 @@ export function outdatedListeningKeys(
   if (!results) return Object.keys(listeningKeys)
 
   return Object.keys(listeningKeys).filter((callKey) => {
-    console.log('listening keys', listeningKeys)
     const blocksPerFetch = listeningKeys[callKey]
 
     const data = callResults[chainId][callKey]
@@ -123,19 +120,15 @@ export default function Updater(): null {
   const state = useSelector<AppState, AppState['multicall']>((s) => s.multicall)
   // wait for listeners to settle before triggering updates
   const debouncedListeners = useDebounce(state.callListeners, 100)
-  console.log('deboun', state)
   const { currentBlock } = useBlock()
   const { chainId } = useActiveWeb3React()
   const multicallContract = useMulticallContract()
-  console.log('multi call', multicallContract)
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>()
 
   const listeningKeys: { [callKey: string]: number } = useMemo(() => {
     return activeListeningKeys(debouncedListeners, chainId)
   }, [debouncedListeners, chainId])
-  console.log('listenuing keys', debouncedListeners)
-   
-  console.log(state.callResults, listeningKeys, chainId, currentBlock, 'unse')
+
   const unserializedOutdatedCallKeys = useMemo(() => {
     return outdatedListeningKeys(state.callResults, listeningKeys, chainId, currentBlock)
   }, [chainId, state.callResults, listeningKeys, currentBlock])
@@ -155,7 +148,6 @@ export default function Updater(): null {
 
     const chunkedCalls = chunkArray(calls, CALL_CHUNK_SIZE)
 
-    console.log( calls, currentBlock, chainId, multicallContract, serializedOutdatedCallKeys,  outdatedCallKeys, chunkedCalls ,'useEffect')
 
     if (cancellations.current?.blockNumber !== currentBlock) {
       cancellations.current?.cancellations?.forEach((c) => c())
@@ -186,7 +178,6 @@ export default function Updater(): null {
             // accumulates the length of all previous indices
             const firstCallKeyIndex = chunkedCalls.slice(0, index).reduce<number>((memo, curr) => memo + curr.length, 0)
             const lastCallKeyIndex = firstCallKeyIndex + returnData.length
-              console.log(chainId, 'chain id')
             dispatch(
               updateMulticallResults({
                 chainId,

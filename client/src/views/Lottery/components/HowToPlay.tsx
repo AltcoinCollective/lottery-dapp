@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Flex, Text, Heading, useMatchBreakpoints, Link, Image } from 'hydroprojectuikit'
+import { Box, Flex, Text, Heading, useMatchBreakpoints, Image } from 'hydroprojectuikit'
+// import {  Link } from 'hydroprojectuikit'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 import { BallWithNumber, MatchExampleA, MatchExampleB, PoolAllocationChart } from '../svgs'
@@ -80,9 +81,9 @@ const BallsContainer = styled(Flex)`
   width: 100%;
 `
 
-const InlineLink = styled(Link)`
-  display: inline;
-`
+// const InlineLink = styled(Link)`
+//   display: inline;
+// `
 
 const ExampleBalls = () => {
   const { isDesktop } = useMatchBreakpoints()

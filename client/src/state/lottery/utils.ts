@@ -18,7 +18,7 @@ type ResponseData = {
   
   
     } catch (err) {
-     return  console.log("Error: ", err)
+     return   err
     }   
   
   }
@@ -36,7 +36,7 @@ type ResponseData = {
   
   
     } catch (err) {
-     return  console.log("Error: ", err)
+     return  err
     }   
   
   }
