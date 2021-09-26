@@ -1,5 +1,5 @@
 /**
- *Submitted for verification at BscScan.com on 2021-07-02
+ *Submitted for verification at BscScan.com on 2021-07-02 
  */
 
 // File: @openzeppelin/contracts/utils/Context.sol
@@ -731,16 +731,16 @@ contract HydroSwapLottery is ReentrancyGuard, IHydroSwapLottery, Ownable {
   uint256 public currentLotteryId;
   uint256 public currentTicketId;
 
-  uint256 public maxNumberTicketsPerBuyOrClaim = 100;
+  uint256 public maxNumberTicketsPerBuyOrClaim = 20;
 
-  uint256 public maxPriceTicketInhydro = 50 ether;
-  uint256 public minPriceTicketInhydro = 0.005 ether;
+  uint256 public maxPriceTicketInhydro = 10000 ether;
+  uint256 public minPriceTicketInhydro = 500 ether;
 
   uint256 public pendingInjectionNextLottery;
 
   uint256 public constant MIN_DISCOUNT_DIVISOR = 300;
   uint256 public constant MIN_LENGTH_LOTTERY = 4 hours - 5 minutes; // 4 hours
-  uint256 public constant MAX_LENGTH_LOTTERY = 4 days + 5 minutes; // 4 days
+  uint256 public constant MAX_LENGTH_LOTTERY = 7 days + 5 minutes; // 4 days
   uint256 public constant MAX_TREASURY_FEE = 3000; // 30%
 
   IERC20 public hydroToken;

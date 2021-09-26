@@ -111,6 +111,7 @@ const useApproveConfirmTransaction = ({
     isConfirming: state.confirmState === 'loading',
     isConfirmed: state.confirmState === 'success',
     handleApprove: async () => {
+
       try {
         const tx = await onApprove()
         dispatch({ type: 'approve_sending' })
@@ -122,7 +123,7 @@ const useApproveConfirmTransaction = ({
       } catch (error) {
         dispatch({ type: 'approve_error' })
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
-      }
+     }
     },
     handleConfirm: async () => {
       dispatch({ type: 'confirm_sending' })

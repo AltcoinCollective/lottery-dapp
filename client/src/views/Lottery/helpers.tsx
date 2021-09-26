@@ -11,6 +11,7 @@ export const parseRetrievedNumber = (number: string): string => {
   return numberAsArray.join('')
 }
 
+
 export const getDrawnDate = (endTime: string) => {
   const endTimeInMs = parseInt(endTime, 10) * 1000
   const endTimeAsDate = new Date(endTimeInMs)
@@ -41,6 +42,7 @@ export const processLotteryResponse = (
     discountDivisor: discountDivisorAsString,
     amountCollectedInCake: amountCollectedInCakeAsString,
   } = lotteryData
+  
 
   const discountDivisor = new BigNumber(discountDivisorAsString)
   const priceTicketInCake = new BigNumber(priceTicketInCakeAsString)

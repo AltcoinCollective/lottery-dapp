@@ -7,13 +7,16 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useBlock } from 'state/block/hooks'
 import { AppDispatch, AppState } from '../index'
 import {
-  addMulticallListeners,
   Call,
-  removeMulticallListeners,
-  parseCallKey,
   toCallKey,
   ListenerOptions,
 } from './actions'
+
+// import {
+//  parseCallKey,
+//   addMulticallListeners,
+//   removeMulticallListeners,
+// } from './actions'
 
 export interface Result extends ReadonlyArray<any> {
   readonly [key: string]: any
@@ -52,7 +55,9 @@ export const NEVER_RELOAD: ListenerOptions = {
 function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): CallResult[] {
   const { chainId } = useActiveWeb3React()
   const callResults = useSelector<AppState, AppState['multicall']['callResults']>(
-    (state) => state.multicall.callResults,
+    (state) => {
+      return state.multicall.callResults
+    },
   )
   const dispatch = useDispatch<AppDispatch>()
 
@@ -72,23 +77,23 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
     const callKeys: string[] = JSON.parse(serializedCallKeys)
     if (!chainId || callKeys.length === 0) return undefined
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const calls = callKeys.map((key) => parseCallKey(key))
-    dispatch(
-      addMulticallListeners({
-        chainId,
-        calls,
-        options,
-      }),
-    )
+    // const calls = callKeys.map((key) => parseCallKey(key))
+    // dispatch(
+    //   addMulticallListeners({
+    //     chainId,
+    //     calls,
+    //     options,
+    //   }),
+   // )
 
     return () => {
-      dispatch(
-        removeMulticallListeners({
-          chainId,
-          calls,
-          options,
-        }),
-      )
+      // dispatch(
+      //   removeMulticallListeners({
+      //     chainId,
+      //     calls,
+      //     options,
+      //   }),
+      // )
     }
   }, [chainId, dispatch, options, serializedCallKeys])
 

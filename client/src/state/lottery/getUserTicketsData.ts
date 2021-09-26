@@ -7,7 +7,6 @@ const lotteryContract = getLotteryV2Contract()
 
 export const processRawTicketsResponse = (ticketsResponse: UserTicketsResponse): LotteryTicket[] => {
   const [ticketIds, ticketNumbers, ticketStatuses] = ticketsResponse
-
   if (ticketIds?.length > 0) {
     return ticketIds.map((ticketId, index) => {
       return {

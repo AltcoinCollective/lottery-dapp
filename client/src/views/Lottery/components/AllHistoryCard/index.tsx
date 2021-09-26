@@ -33,6 +33,7 @@ const AllHistoryCard = () => {
     lotteriesData,
     currentRound: { status, isLoading },
   } = useLottery()
+
   const [latestRoundId, setLatestRoundId] = useState(null)
   const [selectedRoundId, setSelectedRoundId] = useState('')
   const [selectedLotteryNodeData, setSelectedLotteryNodeData] = useState(null)
@@ -54,8 +55,11 @@ const AllHistoryCard = () => {
     setSelectedLotteryNodeData(null)
 
     const fetchLotteryData = async () => {
+  
       const lotteryData = await fetchLottery(selectedRoundId)
+
       const processedLotteryData = processLotteryResponse(lotteryData)
+
       setSelectedLotteryNodeData(processedLotteryData)
     }
 

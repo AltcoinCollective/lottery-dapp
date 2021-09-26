@@ -30,7 +30,7 @@ async function fetchChunk(
   chunk: Call[],
   minBlockNumber: number,
 ): Promise<{ results: string[]; blockNumber: number }> {
-  console.debug('Fetching chunk', multicallContract, chunk, minBlockNumber)
+  console.debug('Fetching chunk')
   let resultsBlockNumber
   let returnData
   try {
@@ -63,6 +63,7 @@ export function activeListeningKeys(
   const listeners = allListeners[chainId]
   if (!listeners) return {}
 
+  
   return Object.keys(listeners).reduce<{ [callKey: string]: number }>((memo, callKey) => {
     const keyListeners = listeners[callKey]
 
@@ -138,6 +139,7 @@ export default function Updater(): null {
   )
 
   useEffect(() => {
+
     if (!currentBlock || !chainId || !multicallContract) return
 
     const outdatedCallKeys: string[] = JSON.parse(serializedOutdatedCallKeys)
@@ -146,9 +148,12 @@ export default function Updater(): null {
 
     const chunkedCalls = chunkArray(calls, CALL_CHUNK_SIZE)
 
+
     if (cancellations.current?.blockNumber !== currentBlock) {
       cancellations.current?.cancellations?.forEach((c) => c())
     }
+
+  
 
     dispatch(
       fetchingMulticallResults({
@@ -173,7 +178,6 @@ export default function Updater(): null {
             // accumulates the length of all previous indices
             const firstCallKeyIndex = chunkedCalls.slice(0, index).reduce<number>((memo, curr) => memo + curr.length, 0)
             const lastCallKeyIndex = firstCallKeyIndex + returnData.length
-
             dispatch(
               updateMulticallResults({
                 chainId,
