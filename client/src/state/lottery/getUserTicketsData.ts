@@ -46,7 +46,6 @@ export const fetchUserTicketsForOneRound = async (account: string, lotteryId: st
     numReturned = response.length
     ticketData.push(...response)
   }
-
   return ticketData
 }
 
@@ -59,10 +58,14 @@ export const fetchUserTicketsForMultipleRounds = async (
     const roundId = idsToCheck[i]
     // eslint-disable-next-line no-await-in-loop
     const ticketsForRound = await fetchUserTicketsForOneRound(account, roundId)
+
+    
     ticketsForMultipleRounds.push({
       roundId,
       userTickets: ticketsForRound,
     })
+
+    console.log('ticket for one round', i,  idsToCheck, idsToCheck.length, roundId, ticketsForRound, ticketsForMultipleRounds)
   }
   return ticketsForMultipleRounds
 }

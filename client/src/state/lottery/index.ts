@@ -44,12 +44,14 @@ export const fetchCurrentLottery = createAsyncThunk<LotteryResponse, { currentLo
   'lottery/fetchCurrentLottery',
   async ({ currentLotteryId }) => {
     const lotteryInfo = await fetchLottery(currentLotteryId)
+    console.log('fetchCurrentLottery', lotteryInfo)
     return lotteryInfo
   },
 )
 
 export const fetchCurrentLotteryId = createAsyncThunk<PublicLotteryData>('lottery/fetchCurrentLotteryId', async () => {
   const currentIdAndMaxBuy = await fetchCurrentLotteryIdAndMaxBuy()
+  console.log('fetchCurrentLotteryID', currentIdAndMaxBuy)
   return currentIdAndMaxBuy
 })
 
@@ -57,6 +59,7 @@ export const fetchUserTicketsAndLotteries = createAsyncThunk<
   { userTickets: LotteryTicket[]; userLotteries: LotteryUserGraphEntity },
   { account: string; currentLotteryId: string }
 >('lottery/fetchUserTicketsAndLotteries', async ({ account, currentLotteryId }) => {
+  console.log('fetch user data',  currentLotteryId, account)
   const userLotteriesRes = await getUserLotteryData(account, currentLotteryId)
   const userParticipationInCurrentRound = userLotteriesRes.rounds?.find((round) => round.lotteryId === currentLotteryId)
   const userTickets = userParticipationInCurrentRound?.tickets
@@ -110,6 +113,7 @@ export const LotterySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCurrentLottery.fulfilled, (state, action: PayloadAction<LotteryResponse>) => {
+      console.log('payload', action.payload)
       state.currentRound = { ...state.currentRound, ...action.payload }
     })
     builder.addCase(fetchCurrentLotteryId.fulfilled, (state, action: PayloadAction<PublicLotteryData>) => {
@@ -119,11 +123,13 @@ export const LotterySlice = createSlice({
     builder.addCase(
       fetchUserTicketsAndLotteries.fulfilled,
       (state, action: PayloadAction<{ userTickets: LotteryTicket[]; userLotteries: LotteryUserGraphEntity }>) => {
+        console.log('fetchUserTicketsAndLotteries', action.payload)
         state.currentRound.userTickets.isLoading = false
         state.currentRound.userTickets.tickets = action.payload.userTickets
         state.userLotteryData = action.payload.userLotteries
       },
     )
+    
     builder.addCase(fetchPublicLotteries.fulfilled, (state, action: PayloadAction<LotteryRoundGraphEntity[]>) => {
       state.lotteriesData = action.payload
     })

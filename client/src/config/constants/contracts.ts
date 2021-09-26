@@ -9,7 +9,7 @@ export default {
   },
  // hydro lottery contract
   lotteryV2: {
-    97: '0x1dEf72266e09e9EB7d7b49048DA55B58Aded4E40',
+    97: '0x7E9d1f7D78288Dc5FEcB40E03BfaB1cA86A48BFd',
     56: '0x5aF6D33DE2ccEC94efb1bDF8f92Bd58085432d2c',
     // 0x5B387f4886F043f603f7d0cb55DBd727D6649C73
   },
