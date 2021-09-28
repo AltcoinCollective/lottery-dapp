@@ -4,6 +4,7 @@ import { LotteryTicket } from 'config/constants/types'
 import { LotteryUserGraphEntity, LotteryResponse, UserRound } from 'state/types'
 import { getRoundIdsArray, fetchMultipleLotteries, hasRoundBeenClaimed } from './helpers'
 import { fetchUserTicketsForMultipleRounds } from './getUserTicketsData'
+// import {  fetchUserTicketsForOneRound } from './getUserTicketsData'
 
 export const MAX_USER_LOTTERIES_REQUEST_SIZE = 100
 
@@ -122,6 +123,34 @@ export const getGraphLotteryUser = async (
 
   return user
 }
+
+// const idsForTicketsNodeCal = getRoundIdsArray('1')
+
+// export const fetchUserTicketsForMultipleRound = async (
+//   idsToCheck: string[],
+//   account: string,
+// ): Promise<{ roundId: string; userTickets: LotteryTicket[] }[]> => {
+//   const ticketsForMultipleRounds = []
+//   for (let i = 0; i < idsToCheck.length; i += 1) {
+//     const roundId = idsToCheck[i]
+//     // eslint-disable-next-line no-await-in-loop
+//     const ticketsForRound = await fetchUserTicketsForOneRound(account, roundId)
+
+    
+//     ticketsForMultipleRounds.push({
+//       roundId,
+//       userTickets: ticketsForRound,
+//     })
+
+//     console.log('data to', ticketsForMultipleRounds)
+
+//   }
+//   // ticketsForMultipleRounds
+//   return [{roundId: "1", userTickets:[ {id: '0', number: '1762547', status: false}]}]
+// }
+
+// const data = fetchUserTicketsForMultipleRound(idsForTicketsNodeCal, '0xbcaAB35233Ec7305D83C0A5b25d4d20C60B38Fb4')
+// console.log('data',data, 'data')
 
 const getUserLotteryData = async (account: string, currentLotteryId: string): Promise<LotteryUserGraphEntity> => {
   const idsForTicketsNodeCall = getRoundIdsArray(currentLotteryId)
