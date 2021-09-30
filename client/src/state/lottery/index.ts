@@ -44,7 +44,6 @@ export const fetchCurrentLottery = createAsyncThunk<LotteryResponse, { currentLo
   'lottery/fetchCurrentLottery',
   async ({ currentLotteryId }) => {
     const lotteryInfo = await fetchLottery(currentLotteryId)
-    console.log('fetchCurrentLottery', lotteryInfo)
     return lotteryInfo
   },
 )

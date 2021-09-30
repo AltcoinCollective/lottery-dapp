@@ -57,7 +57,6 @@ const PreviousRoundCardBody: React.FC<{ lotteryNodeData: LotteryRound; lotteryId
     currentRound: { status },
   } = useLottery()
   const userLotteryData = useGetUserLotteriesGraphData()
-  console.log('checking >>xoxo')
   const userDataForRound = userLotteryData.rounds.find((userLotteryRound) => userLotteryRound.lotteryId === lotteryId)
   const { isLg, isXl, isXxl } = useMatchBreakpoints()
   const isLargerScreen = isLg || isXl || isXxl

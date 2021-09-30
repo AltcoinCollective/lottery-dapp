@@ -1,12 +1,13 @@
 import BigNumber from 'bignumber.js'
+import {ethers} from 'ethers'
 import { LotteryStatus, LotteryTicket, LotteryTicketClaimData } from 'config/constants/types'
 import { LotteryUserGraphEntity, LotteryRoundGraphEntity } from 'state/types'
-// import { multicallv2 } from 'utils/multicall'
-// import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
+import { multicallv2 } from 'utils/multicall'
+import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
 
 import { NUM_ROUNDS_TO_CHECK_FOR_REWARDS } from 'config/constants/lottery'
-// import { getLotteryV2Address } from 'utils/addressHelpers'
-// import { BIG_ZERO } from 'utils/bigNumber'
+import { getLotteryV2Address } from 'utils/addressHelpers'
+import { BIG_ZERO } from 'utils/bigNumber'
 import { fetchUserTicketsForMultipleRounds } from './getUserTicketsData'
 import { MAX_LOTTERIES_REQUEST_SIZE } from './getLotteriesData'
 
@@ -16,32 +17,28 @@ interface RoundDataAndUserTickets {
   finalNumber: string
 }
 
-// const lotteryV2Abi  = HlotteryV2Abi.abi
-
-
 
 
 const fetchCakeRewardsForTickets = async (
   winningTickets: LotteryTicket[],
 ): Promise<{ ticketsWithUnclaimedRewards: LotteryTicket[]; cakeTotal: BigNumber }> => {
-  // const calls = winningTickets.map((winningTicket) => {
-  //   const { roundId, id, rewardBracket } = winningTicket
-  //   return {
-  //     name: 'viewRewardsForTicketId',
-  //     address: lotteryAddress,
-  //     params: [roundId, id, rewardBracket],
-  //   }
-  // })
+  const calls = winningTickets.map((winningTicket) => {
+    const { roundId, id, rewardBracket } = winningTicket
+    return {
+      name: 'viewRewardsForTicketId',
+      address: "0x7E9d1f7D78288Dc5FEcB40E03BfaB1cA86A48BFd",
+      params: [roundId, id, rewardBracket],
+    }
+  })
+
 
   try {
-  //  const cakeRewards = await multicallv2(lotteryV2Abi, calls)
+   const cakeRewards = await multicallv2(lotteryV2Abi, calls)
 
-  //  const cakeTotal = cakeRewards.reduce((accum: BigNumber, cakeReward: ethers.BigNumber[]) => {
-  //    return accum.plus(new BigNumber(cakeReward[0].toString()))
-  //  }, BIG_ZERO)
+   const cakeTotal = cakeRewards.reduce((accum: BigNumber, cakeReward: ethers.BigNumber[]) => {
+     return accum.plus(new BigNumber(cakeReward[0].toString()))
+   }, BIG_ZERO)
 
-  const cakeRewards = new BigNumber(0)
-  const cakeTotal = new BigNumber(0)
 
     const ticketsWithUnclaimedRewards = winningTickets.map((winningTicket, index) => {
       return { ...winningTicket, cakeReward: cakeRewards[index] }

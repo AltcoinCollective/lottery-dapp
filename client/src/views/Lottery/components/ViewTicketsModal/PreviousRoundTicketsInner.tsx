@@ -112,12 +112,12 @@ const PreviousRoundTicketsInner: React.FC<{ roundId: string }> = ({ roundId }) =
       const userTickets = await fetchUserTicketsForOneRound(account, roundId)
       const lotteryData = await fetchLottery(roundId)
       const processedLotteryData = processLotteryResponse(lotteryData)
+      
       const winningTickets = await getWinningTickets({
         roundId,
         userTickets,
         finalNumber: processedLotteryData.finalNumber.toString(),
       })
-
       setUserWinningTickets({
         isFetched: true,
         allWinningTickets: winningTickets?.allWinningTickets,

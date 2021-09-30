@@ -66,8 +66,8 @@ export const getGraphLotteryUser = async (
   let user
   const blankUser = {
     account,
-    totalCake: '',
-    totalTickets: '',
+    totalhydro: '3',
+    totalTickets: '20',
     rounds: [],
   }
 
@@ -79,7 +79,7 @@ export const getGraphLotteryUser = async (
           user(id: $account) {
             id
             totalTickets
-            totalCake
+            totalhydro
             rounds(first: $first, skip: $skip, where: $where, orderDirection: desc, orderBy: block) {
               id
               lottery {
@@ -95,6 +95,8 @@ export const getGraphLotteryUser = async (
       `,
       { account: account.toLowerCase(), first, skip, where },
     )
+
+    console.log('response user', response)
     const userRes = response.user
 
     // If no user returned - return blank user
@@ -103,7 +105,7 @@ export const getGraphLotteryUser = async (
     } else {
       user = {
         account: userRes.id,
-        totalCake: userRes.totalCake,
+        totalhydro: userRes.totalhydro,
         totalTickets: userRes.totalTickets,
         rounds: userRes.rounds.map((round) => {
           return {
@@ -161,6 +163,7 @@ const getUserLotteryData = async (account: string, currentLotteryId: string): Pr
   const graphResponse = await getGraphLotteryUser(account)
   const mergedRoundData = applyNodeDataToUserGraphResponse(userRoundsNodeData, graphResponse.rounds, lotteriesNodeData)
   const graphResponseWithNodeRounds = { ...graphResponse, rounds: mergedRoundData }
+  console.log('graph response', graphResponseWithNodeRounds)
   return graphResponseWithNodeRounds
 }
 
