@@ -40,4 +40,7 @@ module.exports = {
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
+  paths: {
+    artifacts:'./client/src/hydroConfig'
+  }
 };
