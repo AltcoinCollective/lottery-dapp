@@ -74,7 +74,7 @@ const NextDrawCard = () => {
     if (status === LotteryStatus.CLOSE || status === LotteryStatus.CLAIMABLE) {
       return (
         <Heading scale="xl" color="secondary" textAlign={['center', null, null, 'left']}>
-          {t('Calculating')}...
+          {t('Yet to be determined')}...
         </Heading>
       )
     }

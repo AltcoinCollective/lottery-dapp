@@ -4,6 +4,7 @@ import { LotteryTicket } from 'config/constants/types'
 import { LotteryUserGraphEntity, LotteryResponse, UserRound } from 'state/types'
 import { getRoundIdsArray, fetchMultipleLotteries, hasRoundBeenClaimed } from './helpers'
 import { fetchUserTicketsForMultipleRounds } from './getUserTicketsData'
+// import {  fetchUserTicketsForOneRound } from './getUserTicketsData'
 
 export const MAX_USER_LOTTERIES_REQUEST_SIZE = 100
 
@@ -65,8 +66,8 @@ export const getGraphLotteryUser = async (
   let user
   const blankUser = {
     account,
-    totalCake: '',
-    totalTickets: '',
+    totalhydro: '3',
+    totalTickets: '20',
     rounds: [],
   }
 
@@ -78,7 +79,7 @@ export const getGraphLotteryUser = async (
           user(id: $account) {
             id
             totalTickets
-            totalCake
+            totalhydro
             rounds(first: $first, skip: $skip, where: $where, orderDirection: desc, orderBy: block) {
               id
               lottery {
@@ -94,6 +95,8 @@ export const getGraphLotteryUser = async (
       `,
       { account: account.toLowerCase(), first, skip, where },
     )
+
+    console.log('response user', response)
     const userRes = response.user
 
     // If no user returned - return blank user
@@ -102,7 +105,7 @@ export const getGraphLotteryUser = async (
     } else {
       user = {
         account: userRes.id,
-        totalCake: userRes.totalCake,
+        totalhydro: userRes.totalhydro,
         totalTickets: userRes.totalTickets,
         rounds: userRes.rounds.map((round) => {
           return {
@@ -123,17 +126,44 @@ export const getGraphLotteryUser = async (
   return user
 }
 
+// const idsForTicketsNodeCal = getRoundIdsArray('1')
+
+// export const fetchUserTicketsForMultipleRound = async (
+//   idsToCheck: string[],
+//   account: string,
+// ): Promise<{ roundId: string; userTickets: LotteryTicket[] }[]> => {
+//   const ticketsForMultipleRounds = []
+//   for (let i = 0; i < idsToCheck.length; i += 1) {
+//     const roundId = idsToCheck[i]
+//     // eslint-disable-next-line no-await-in-loop
+//     const ticketsForRound = await fetchUserTicketsForOneRound(account, roundId)
+
+    
+//     ticketsForMultipleRounds.push({
+//       roundId,
+//       userTickets: ticketsForRound,
+//     })
+
+//     console.log('data to', ticketsForMultipleRounds)
+
+//   }
+//   // ticketsForMultipleRounds
+//   return [{roundId: "1", userTickets:[ {id: '0', number: '1762547', status: false}]}]
+// }
+
+// const data = fetchUserTicketsForMultipleRound(idsForTicketsNodeCal, '0xbcaAB35233Ec7305D83C0A5b25d4d20C60B38Fb4')
+// console.log('data',data, 'data')
+
 const getUserLotteryData = async (account: string, currentLotteryId: string): Promise<LotteryUserGraphEntity> => {
   const idsForTicketsNodeCall = getRoundIdsArray(currentLotteryId)
   const roundDataAndUserTickets = await fetchUserTicketsForMultipleRounds(idsForTicketsNodeCall, account)
-  console.log('round details', roundDataAndUserTickets)
-  console.log('checking')
   const userRoundsNodeData = roundDataAndUserTickets.filter((round) => round.userTickets.length > 0)
   const idsForLotteriesNodeCall = userRoundsNodeData.map((round) => round.roundId)
   const lotteriesNodeData = await fetchMultipleLotteries(idsForLotteriesNodeCall)
   const graphResponse = await getGraphLotteryUser(account)
   const mergedRoundData = applyNodeDataToUserGraphResponse(userRoundsNodeData, graphResponse.rounds, lotteriesNodeData)
   const graphResponseWithNodeRounds = { ...graphResponse, rounds: mergedRoundData }
+  console.log('graph response', graphResponseWithNodeRounds)
   return graphResponseWithNodeRounds
 }
 

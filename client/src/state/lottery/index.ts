@@ -44,7 +44,6 @@ export const fetchCurrentLottery = createAsyncThunk<LotteryResponse, { currentLo
   'lottery/fetchCurrentLottery',
   async ({ currentLotteryId }) => {
     const lotteryInfo = await fetchLottery(currentLotteryId)
-    console.log('fetchCurrentLottery', lotteryInfo)
     return lotteryInfo
   },
 )
@@ -61,14 +60,17 @@ export const fetchUserTicketsAndLotteries = createAsyncThunk<
 >('lottery/fetchUserTicketsAndLotteries', async ({ account, currentLotteryId }) => {
   console.log('fetch user data',  currentLotteryId, account)
   const userLotteriesRes = await getUserLotteryData(account, currentLotteryId)
+  console.log('lotde>>>', userLotteriesRes)
   const userParticipationInCurrentRound = userLotteriesRes.rounds?.find((round) => round.lotteryId === currentLotteryId)
   const userTickets = userParticipationInCurrentRound?.tickets
 
+  
   // User has not bought tickets for the current lottery, or there has been an error
   if (!userTickets || userTickets.length === 0) {
     return { userTickets: null, userLotteries: userLotteriesRes }
   }
-
+            // /* eslint-disable */
+            // debugger;
   return { userTickets, userLotteries: userLotteriesRes }
 })
 
