@@ -412,7 +412,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
             {t('You pay')}
           </Text>
           <Text fontSize="16px" bold>
-            ~{totalCost} Hydro
+            ~{parseFloat(totalCost).toFixed(2)}  Hydro
           </Text>
         </Flex>
 
