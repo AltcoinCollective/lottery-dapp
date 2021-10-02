@@ -4,9 +4,8 @@ import { LotteryStatus, LotteryTicket, LotteryTicketClaimData } from 'config/con
 import { LotteryUserGraphEntity, LotteryRoundGraphEntity } from 'state/types'
 import { multicallv2 } from 'utils/multicall'
 import lotteryV2Abi from 'config/abi/dropped-lotteryV2.json'
-
 import { NUM_ROUNDS_TO_CHECK_FOR_REWARDS } from 'config/constants/lottery'
-import { getLotteryV2Address } from 'utils/addressHelpers'
+// import { getLotteryV2Address } from 'utils/addressHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { fetchUserTicketsForMultipleRounds } from './getUserTicketsData'
 import { MAX_LOTTERIES_REQUEST_SIZE } from './getLotteriesData'
@@ -45,7 +44,7 @@ const fetchCakeRewardsForTickets = async (
     })
     return { ticketsWithUnclaimedRewards, cakeTotal }
   } catch (error) {
-    console.error(error)
+   // console.error(error)
     return { ticketsWithUnclaimedRewards: null, cakeTotal: null }
   }
 }
