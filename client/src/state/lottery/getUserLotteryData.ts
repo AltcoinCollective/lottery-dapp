@@ -96,7 +96,7 @@ export const getGraphLotteryUser = async (
       { account: account.toLowerCase(), first, skip, where },
     )
 
-    console.log('response user', response)
+ 
     const userRes = response.user
 
     // If no user returned - return blank user
@@ -163,7 +163,7 @@ const getUserLotteryData = async (account: string, currentLotteryId: string): Pr
   const graphResponse = await getGraphLotteryUser(account)
   const mergedRoundData = applyNodeDataToUserGraphResponse(userRoundsNodeData, graphResponse.rounds, lotteriesNodeData)
   const graphResponseWithNodeRounds = { ...graphResponse, rounds: mergedRoundData }
-  console.log('graph response', graphResponseWithNodeRounds)
+  // console.log('graph response', graphResponseWithNodeRounds)
   return graphResponseWithNodeRounds
 }
 

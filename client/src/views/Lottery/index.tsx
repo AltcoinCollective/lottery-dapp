@@ -11,8 +11,12 @@ import {
   GET_TICKETS_BG,
   FINISHED_ROUNDS_BG,
   FINISHED_ROUNDS_BG_DARK,
-  CHECK_PRIZES_BG,
 } from './pageSectionStyles'
+
+// import {
+//   CHECK_PRIZES_BG,
+// } from './pageSectionStyles'
+
 import useGetNextLotteryEvent from './hooks/useGetNextLotteryEvent'
 import useStatusTransitions from './hooks/useStatusTransitions'
 import Hero from './components/Hero'
@@ -21,7 +25,7 @@ import Countdown from './components/Countdown'
 import HistoryTabMenu from './components/HistoryTabMenu'
 import YourHistoryCard from './components/YourHistoryCard'
 import AllHistoryCard from './components/AllHistoryCard'
-import CheckPrizesSection from './components/CheckPrizesSection'
+// import CheckPrizesSection from './components/CheckPrizesSection'
 import HowToPlay from './components/HowToPlay'
 import useShowMoreUserHistory from './hooks/useShowMoreUserRounds'
 

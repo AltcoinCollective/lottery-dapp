@@ -75,7 +75,6 @@ const ClaimPrizesModal: React.FC<ClaimPrizesModalModalProps> = ({ onDismiss, rou
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
       </StyledModalHeader>
-      {console.log('round to claim',roundsToClaim)}
       <ModalBody p="24px">
         <ClaimPrizesInner
           onSuccess={() => {
