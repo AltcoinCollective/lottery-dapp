@@ -5,7 +5,7 @@ type ResponseData = {
   };
   
   export const lotterInfo =async (contractABI, contractAddress)=>{
-    const url = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+    const url = 'https://data-seed-prebsc-1-s3.binance.org:8545/'
     const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
     
     try {
@@ -24,7 +24,7 @@ type ResponseData = {
   }
   
   export const lotterInfoMaxBuy =async (contractABI, contractAddress)=>{
-    const url = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+    const url = 'https://data-seed-prebsc-1-s3.binance.org:8545/'
     const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
     
     try {

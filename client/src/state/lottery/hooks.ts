@@ -13,7 +13,7 @@ import { useProcessLotteryResponse } from './helpers'
 
 // custom hooks
 export const useCustomLotteryInfo  = (contractABI, contractAddress )=>{
-  const url = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+  const url = 'https://data-seed-prebsc-1-s3.binance.org:8545/'
   const [data, setData] = useState({currentLotteryId:null, maxNumberTicketsPerBuyOrClaim :null})
 
 const memoizedFunc = useCallback(()=>{
