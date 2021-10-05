@@ -11,7 +11,7 @@ const InputsContainer = styled.div<{ focused: boolean; isDuplicate: boolean }>`
   height: 36px;
   box-sizing: border-box;
   border: 1px solid #d7caec;
-  background-color: #eeeaf4;
+  background-color: whitesmoke;
   border-radius: 16px;
   margin-bottom: 8px;
   ${({ isDuplicate }) =>

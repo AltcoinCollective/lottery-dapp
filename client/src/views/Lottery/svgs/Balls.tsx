@@ -255,7 +255,7 @@ export const BallText = styled(Text)<{ rotationTransform?: number }>`
   transform: rotate(${({ rotationTransform }) => rotationTransform || 0}deg);
 `
 
-export type BallColor = 'pink' | 'lilac' | 'teal' | 'aqua' | 'green' | 'yellow'
+export type BallColor = 'pink' | 'lilac' | 'teal' | 'aqua' | 'green' | 'yellow' | 'white'
 
 interface BallWithNumberProps {
   color: BallColor

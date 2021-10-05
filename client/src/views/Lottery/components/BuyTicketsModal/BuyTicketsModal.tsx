@@ -431,7 +431,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
             />
             {isApproved && (
               <Button
-                variant="secondary"
+                variant="tertiary"
                 mt="8px"
                 endIcon={
                   <ArrowForwardIcon
