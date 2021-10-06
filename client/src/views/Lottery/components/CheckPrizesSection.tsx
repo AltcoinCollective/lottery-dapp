@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { Button, Heading, Flex, useModal, AutoRenewIcon } from 'hydroprojectuikit'
 import { useWeb3React } from '@web3-react/core'
 import { LotteryStatus } from 'config/constants/types'
@@ -8,14 +7,6 @@ import { useGetUserLotteriesGraphData, useLottery } from 'state/lottery/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import ClaimPrizesModal from './ClaimPrizesModal'
 import useGetUnclaimedRewards, { FetchStatus } from '../hooks/useGetUnclaimedRewards'
-
-const TicketImage = styled.img`
-  height: 60px;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    height: 100px;
-  }
-`
-
 
 
 const CheckPrizesSection = () => {
