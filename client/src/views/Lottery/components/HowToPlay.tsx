@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Flex, Text, Heading, useMatchBreakpoints, Image } from 'hydroprojectuikit'
+import { Box, Flex, Text, Heading, useMatchBreakpoints} from 'hydroprojectuikit'
 // import {  Link } from 'hydroprojectuikit'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
@@ -335,10 +335,6 @@ const HowToPlay: React.FC = () => {
           <PoolAllocations />
         </Flex>
       </GappedFlex>
-      <Divider />
-      <Flex justifyContent="center" alignItems="center" flexDirection={['column', 'column', 'row']}>
-        <Image width={240} height={172} src="/images/lottery/tombola.png" alt="tombola bunny" mr="8px" mb="16px" />
-      </Flex>
     </Box>
   )
 }

@@ -5,17 +5,19 @@ import BigNumber from 'bignumber.js'
 import useEagerConnect from 'hooks/useEagerConnect'
 import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
-import { DatePickerPortal } from 'components/DatePicker'
+// import { DatePickerPortal } from 'components/DatePicker'
+import UserMenu from 'components/Menu/UserMenu'
 import GlobalStyle from './style/Global'
-import Menu from './components/Menu'
+// import Menu from './components/Menu'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
 import { ToastListener } from './contexts/ToastsContext'
 import PageLoader from './components/Loader/PageLoader'
-import EasterEgg from './components/EasterEgg'
+// import EasterEgg from './components/EasterEgg'
 import history from './routerHistory'
+import Logo from './assets/hydro-logo-svg.svg'
 // Views included in the main bundle
 // import Pools from './views/Pools'
-import Home from './views/Home'
+// import Home from './views/Home'
 // import Swap from './views/Swap'
 
 
@@ -40,25 +42,34 @@ const App: React.FC = () => {
     <Router history={history}>
       <ResetCSS />
       <GlobalStyle />
-      <Menu>
+      {/* <Menu> */}
+        <div className='' style={{
+          display:'flex',
+          justifyContent:'space-between',
+          alignItems:'center',
+          padding:'1.2rem 0.8rem',
+          maxWidth:'65rem',
+          margin:'auto'
+          
+        }}>
+          <div><img src={Logo} alt='hydro project'/></div>
+          <div>  
+            <UserMenu />
+          </div>
+            </div>
         <SuspenseWithChunkError fallback={<PageLoader />}>
           <Switch>
-            <Route path="/" exact>
-              <Home />
-            </Route>
-
-            <Route path="/lottery">
+            <Route path="/" exact>     
               <Lottery />
             </Route>
-
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>
         </SuspenseWithChunkError>
-      </Menu>
-      <EasterEgg iterations={2} />
+      {/* </Menu> */}
+      {/* <EasterEgg iterations={2} /> */}
       <ToastListener />
-      <DatePickerPortal />
+      {/* <DatePickerPortal /> */}
     </Router>
   )
 }
