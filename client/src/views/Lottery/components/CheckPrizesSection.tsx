@@ -16,12 +16,7 @@ const TicketImage = styled.img`
   }
 `
 
-const TornTicketImage = styled.img`
-  height: 54px;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    height: 84px;
-  }
-`
+
 
 const CheckPrizesSection = () => {
   const { t } = useTranslation()
@@ -81,8 +76,7 @@ const CheckPrizesSection = () => {
     }
     if (hasCheckedForRewards && !hasRewardsToClaim) {
       return (
-        <Flex alignItems="center" justifyContent="center">
-          <TornTicketImage src="/images/lottery/torn-ticket-l.png" alt="torn lottery ticket" />
+        <Flex alignItems="center" justifyContent="center">     
           <Flex mx={['4px', null, '16px']} flexDirection="column">
             <Heading textAlign="center" color="#F4EEFF">
               {t('No prizes to collect')}...
@@ -91,7 +85,7 @@ const CheckPrizesSection = () => {
               {t('Better luck next time!')}
             </Heading>
           </Flex>
-          <TornTicketImage src="/images/lottery/torn-ticket-r.png" alt="torn lottery ticket" />
+   
         </Flex>
       )
     }
@@ -122,12 +116,13 @@ const CheckPrizesSection = () => {
     }
     return (
       <Flex alignItems="center" justifyContent="center">
-        <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
+      
         <Flex mx={['4px', null, '16px']} flexDirection="column">
           <Heading textAlign="center" color="#F4EEFF" mb="24px">
             {t('Are you a winner?')}
           </Heading>
           <Button
+          variant='tertiary'
             disabled={isCheckNowDisabled}
             onClick={fetchAllRewards}
             isLoading={isFetchingRewards}
@@ -136,7 +131,6 @@ const CheckPrizesSection = () => {
             {checkNowText()}
           </Button>
         </Flex>
-        <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
       </Flex>
     )
   }

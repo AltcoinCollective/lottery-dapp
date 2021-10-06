@@ -50,6 +50,7 @@ const UserMenu = () => {
           <LogoutIcon />
         </Flex>
       </UserMenuItem>
+    
     </UIKitUserMenu>
   )
 }
