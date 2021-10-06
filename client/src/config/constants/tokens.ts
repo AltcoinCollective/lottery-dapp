@@ -1649,9 +1649,9 @@ export const testnetTokens = {
     TESTNET,
     '0x5b387f4886f043f603f7d0cb55dbd727d6649c73',
     18,
-    'CAKE',
-    'PancakeSwap Token',
-    'https://pancakeswap.finance/',
+    'hydro',
+    'Project Hydro Token',
+    'http://projecthydro.org',
   ),
   busd: new Token(
     TESTNET,

@@ -1,0 +1,10 @@
+/* smartphones, Android phones, landscape iPhone */ 
+@media (max-width:480px)  { 
+    .logo-img{
+        display: block;
+    }
+    .hydro-price{
+        margin-top: 0.3rem;
+        transform: translateY(0rem)!important;
+    }
+}
