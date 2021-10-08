@@ -7,6 +7,7 @@ import Providers from './Providers'
 import './index.css'
 
 
+
 function Blocklist({ children }: { children: ReactNode }) {
   const { account } = useActiveWeb3React()
   const blocked: boolean = useMemo(() => Boolean(account && BLOCKED_ADDRESSES.indexOf(account) !== -1), [account])

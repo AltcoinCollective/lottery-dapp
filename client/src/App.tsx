@@ -2,7 +2,7 @@ import React, { lazy } from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
 import { ResetCSS } from 'hydroprojectuikit'
 import BigNumber from 'bignumber.js'
-// import useEagerConnect from 'hooks/useEagerConnect'
+import useEagerConnect from 'hooks/useEagerConnect'
 // import { usePollBlockNumber } from 'state/block/hooks'
 // import { usePollCoreFarmData } from 'state/farms/hooks'
 // import { DatePickerPortal } from 'components/DatePicker'
@@ -35,6 +35,7 @@ BigNumber.config({
 })
 
 const App: React.FC = () => {
+  useEagerConnect()
   const price  = useFetchHydroPrice()
 
   return (
