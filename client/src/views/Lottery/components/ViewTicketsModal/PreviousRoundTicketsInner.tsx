@@ -182,7 +182,7 @@ const PreviousRoundTicketsInner: React.FC<{ roundId: string }> = ({ roundId }) =
         </Text>
         <Flex mb="8px" justifyContent="space-between">
           <Flex>
-            <Ticket width="24px" height="24px" mr="8px" />
+            {/* <Ticket width="24px" height="24px" mr="8px" /> */}
             <Text bold color="text">
               {t('Total tickets')}:
             </Text>
