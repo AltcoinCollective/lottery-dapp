@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@apefinance-libs/uikit": "^0.1.6",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@ethersproject/experimental": "^5.0.1",
     "@pancakeswap/sdk": "^2.4.0",
